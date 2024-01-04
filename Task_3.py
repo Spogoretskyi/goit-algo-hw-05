@@ -1,9 +1,12 @@
+import os
 import timeit
 from typing import Callable
 
 
 def read_file(filename):
-    with open(filename, "r", encoding="utf-8") as file:
+    project_dir = os.path.dirname(os.path.abspath(__file__))
+    full_path = os.path.join(project_dir, filename)
+    with open(full_path, "r", encoding="utf-8", errors="ignore") as file:
         return file.read()
 
 
@@ -11,12 +14,12 @@ def measure_time(algorithm: Callable, text: str, pattern: str):
     setup = f"from __main__ import {algorithm}, read_file; text = read_file('{text}'); pattern = '{pattern}'"
     stmt = f"{algorithm}(text, pattern)"
 
-    time_taken = timeit.timeit(stmt, setup, number=1000)
+    time_taken = timeit.timeit(stmt, setup, number=1)
     return time_taken
 
 
-# Knuth Morris Pratt search
-def lps_search(text, pattern):
+# Knuth-Morris-Pratt search
+def knuth_morris_pratt_search(main_string, pattern):
     M = len(pattern)
     N = len(main_string)
 
@@ -59,7 +62,7 @@ def compute_lps(pattern):
     return lps
 
 
-# Boyer Moore search
+# Boyer-Moore search
 def build_shift_table(pattern):
     table = {}
     length = len(pattern)
@@ -87,7 +90,7 @@ def boyer_moore_search(text, pattern):
     return -1
 
 
-# Rabin Karp search
+# Rabin-Karp search
 def polynomial_hash(s, base=256, modulus=101):
     n = len(s)
     hash_value = 0
@@ -97,7 +100,7 @@ def polynomial_hash(s, base=256, modulus=101):
     return hash_value
 
 
-def rabin_karp_search(text, pattern):
+def rabin_karp_search(main_string, substring):
     substring_length = len(substring)
     main_string_length = len(main_string)
 
@@ -127,48 +130,78 @@ def rabin_karp_search(text, pattern):
     return -1
 
 
-# Зазначте файли та підрядки для пошуку
-text_file1 = "article1.txt"
-text_file2 = "article2.txt"
-real_pattern = "your_real_substring_here"
-fake_pattern = "your_fake_substring_here"
+text_file_1 = "article_1.txt"
+text_file_2 = "article_2.txt"
+real_pattern_1 = "Жадібний алгоритм у цьому випадку полягає в тому, щоб на кожному кроці побудови рішення використовувати монети максимального номіналу,"
+real_pattern_2 = "ті блоки, де шуканий елемент належить до інтервалу, утвореного найменшим та найбільшим елементами блоку."
+fake_pattern = "Dura lex sed lex"
 
-# Вимір часу для реального підрядка в обох текстових файлах
-time_brute_force1 = measure_time("brute_force_search", text_file1, real_pattern)
-time_kmp1 = measure_time("knuth_morris_pratt_search", text_file1, real_pattern)
-time_boyer_moore1 = measure_time("boyer_moore_search", text_file1, real_pattern)
-time_rabin_karp1 = measure_time("rabin_karp_search", text_file1, real_pattern)
+time_kmp_1 = measure_time("knuth_morris_pratt_search", text_file_1, real_pattern_1)
+time_boyer_moore_1 = measure_time("boyer_moore_search", text_file_1, real_pattern_1)
+time_rabin_karp_1 = measure_time("rabin_karp_search", text_file_1, real_pattern_1)
 
-time_brute_force2 = measure_time("brute_force_search", text_file2, real_pattern)
-time_kmp2 = measure_time("knuth_morris_pratt_search", text_file2, real_pattern)
-time_boyer_moore2 = measure_time("boyer_moore_search", text_file2, real_pattern)
-time_rabin_karp2 = measure_time("rabin_karp_search", text_file2, real_pattern)
+print()
+print(f"Час виконання алгоритмів для існуючого підрядка в {text_file_1}:")
+print("KMP:", time_kmp_1)
+print("Boyer-Moore:", time_boyer_moore_1)
+print("Rabin-Karp:", time_rabin_karp_1)
 
-# Вимір часу для вигаданого підрядка в обох текстових файлах
-time_fake_brute_force1 = measure_time("brute_force_search", text_file1, fake_pattern)
-time_fake_kmp1 = measure_time("knuth_morris_pratt_search", text_file1, fake_pattern)
-time_fake_boyer_moore1 = measure_time("boyer_moore_search", text_file1, fake_pattern)
-time_fake_rabin_karp1 = measure_time("rabin_karp_search", text_file1, fake_pattern)
+time_fake_kmp_1 = measure_time("knuth_morris_pratt_search", text_file_1, fake_pattern)
+time_fake_boyer_moore_1 = measure_time("boyer_moore_search", text_file_1, fake_pattern)
+time_fake_rabin_karp_1 = measure_time("rabin_karp_search", text_file_1, fake_pattern)
 
-time_fake_brute_force2 = measure_time("brute_force_search", text_file2, fake_pattern)
-time_fake_kmp2 = measure_time("knuth_morris_pratt_search", text_file2, fake_pattern)
-time_fake_boyer_moore2 = measure_time("boyer_moore_search", text_file2, fake_pattern)
-time_fake_rabin_karp2 = measure_time("rabin_karp_search", text_file2, fake_pattern)
+print()
+print(f"Час виконання алгоритмів для вигаданого підрядка в {text_file_1}:")
+print("KMP:", time_fake_kmp_1)
+print("Boyer-Moore:", time_fake_boyer_moore_1)
+print("Rabin-Karp:", time_fake_rabin_karp_1)
 
-# Виведення результатів
-print("Час для реального підрядка в article1.txt:")
-print("Brute Force:", time_brute_force1)
-print("KMP:", time_kmp1)
-print("Boyer-Moore:", time_boyer_moore1)
-print("Rabin-Karp:", time_rabin_karp1)
-
-# Визначення найшвидшого алгоритму
-fastest_algorithm1 = min(
-    time_brute_force1, time_kmp1, time_boyer_moore1, time_rabin_karp1
-)
-fastest_algorithm2 = min(
-    time_brute_force2, time_kmp2, time_boyer_moore2, time_rabin_karp2
+fastest_algorithm_real_1 = min(time_kmp_1, time_boyer_moore_1, time_rabin_karp_1)
+fastest_algorithm_fake_1 = min(
+    time_fake_kmp_1, time_fake_boyer_moore_1, time_fake_rabin_karp_1
 )
 
-print("\nНайшвидший алгоритм для article1.txt:", fastest_algorithm1)
-print("Найшвидший алгоритм для article2.txt:", fastest_algorithm2)
+print()
+print(
+    f"Найшвидший алгоритм для існуючого підрядка в {text_file_1}:",
+    fastest_algorithm_real_1,
+)
+print(
+    f"Найшвидший алгоритм для для вигаданого підрядка в {text_file_1}:",
+    fastest_algorithm_fake_1,
+)
+
+time_kmp_2 = measure_time("knuth_morris_pratt_search", text_file_2, real_pattern_2)
+time_boyer_moore_2 = measure_time("boyer_moore_search", text_file_2, real_pattern_2)
+time_rabin_karp_2 = measure_time("rabin_karp_search", text_file_2, real_pattern_2)
+
+print()
+print(f"Час виконання алгоритмів для існуючого підрядка в {text_file_2}:")
+print("KMP:", time_kmp_2)
+print("Boyer-Moore:", time_boyer_moore_2)
+print("Rabin-Karp:", time_rabin_karp_2)
+
+time_fake_kmp_2 = measure_time("knuth_morris_pratt_search", text_file_2, fake_pattern)
+time_fake_boyer_moore_2 = measure_time("boyer_moore_search", text_file_2, fake_pattern)
+time_fake_rabin_karp_2 = measure_time("rabin_karp_search", text_file_2, fake_pattern)
+
+print()
+print(f"Час виконання алгоритмів для вигаданого підрядка в {text_file_2}:")
+print("KMP:", time_fake_kmp_2)
+print("Boyer-Moore:", time_fake_boyer_moore_2)
+print("Rabin-Karp:", time_fake_rabin_karp_2)
+
+fastest_algorithm_real_2 = min(time_kmp_2, time_boyer_moore_2, time_rabin_karp_2)
+fastest_algorithm_fake_2 = min(
+    time_fake_kmp_2, time_fake_boyer_moore_2, time_fake_rabin_karp_2
+)
+
+print()
+print(
+    f"Найшвидший алгоритм для існуючого підрядка в {text_file_2}:",
+    fastest_algorithm_real_2,
+)
+print(
+    f"Найшвидший алгоритм для для вигаданого підрядка в {text_file_2}:",
+    fastest_algorithm_fake_2,
+)
