@@ -140,68 +140,106 @@ time_kmp_1 = measure_time("knuth_morris_pratt_search", text_file_1, real_pattern
 time_boyer_moore_1 = measure_time("boyer_moore_search", text_file_1, real_pattern_1)
 time_rabin_karp_1 = measure_time("rabin_karp_search", text_file_1, real_pattern_1)
 
+dict_real_1 = {
+    time_kmp_1: "Knuth-Morris-Pratt",
+    time_boyer_moore_1: "Boyer-Moore",
+    time_rabin_karp_1: "Rabin-Karp",
+}
+
 print()
 print(f"Час виконання алгоритмів для існуючого підрядка в {text_file_1}:")
-print("Knuth-Morris-Pratt:", time_kmp_1)
-print("Boyer-Moore:", time_boyer_moore_1)
-print("Rabin-Karp:", time_rabin_karp_1)
+for key, value in dict_real_1.items():
+    print(f"{value}: {key}")
 
 time_fake_kmp_1 = measure_time("knuth_morris_pratt_search", text_file_1, fake_pattern)
 time_fake_boyer_moore_1 = measure_time("boyer_moore_search", text_file_1, fake_pattern)
 time_fake_rabin_karp_1 = measure_time("rabin_karp_search", text_file_1, fake_pattern)
 
+dict_fake_1 = {
+    time_fake_kmp_1: "Knuth-Morris-Pratt",
+    time_fake_boyer_moore_1: "Boyer-Moore",
+    time_fake_rabin_karp_1: "Rabin-Karp",
+}
+
 print()
 print(f"Час виконання алгоритмів для вигаданого підрядка в {text_file_1}:")
-print("Knuth-Morris-Pratt:", time_fake_kmp_1)
-print("Boyer-Moore:", time_fake_boyer_moore_1)
-print("Rabin-Karp:", time_fake_rabin_karp_1)
+for key, value in dict_fake_1.items():
+    print(f"{value}: {key}")
 
 fastest_algorithm_real_1 = min(time_kmp_1, time_boyer_moore_1, time_rabin_karp_1)
 fastest_algorithm_fake_1 = min(
     time_fake_kmp_1, time_fake_boyer_moore_1, time_fake_rabin_karp_1
 )
 
+dict_best_time = {
+    fastest_algorithm_real_1: dict_real_1[fastest_algorithm_real_1]
+    + f" (real, {text_file_1})",
+    fastest_algorithm_fake_1: dict_fake_1[fastest_algorithm_fake_1]
+    + f" (fake, {text_file_1})",
+}
+
 print()
 print(
-    f"Найшвидший алгоритм для існуючого підрядка в {text_file_1}:",
-    fastest_algorithm_real_1,
+    f"Найшвидший алгоритм для існуючого підрядка в {text_file_1}: {dict_real_1[fastest_algorithm_real_1]}: {fastest_algorithm_real_1}"
 )
 print(
-    f"Найшвидший алгоритм для для вигаданого підрядка в {text_file_1}:",
-    fastest_algorithm_fake_1,
+    f"Найшвидший алгоритм для для вигаданого підрядка в {text_file_1}: {dict_fake_1[fastest_algorithm_fake_1]}: {fastest_algorithm_fake_1}"
 )
 
 time_kmp_2 = measure_time("knuth_morris_pratt_search", text_file_2, real_pattern_2)
 time_boyer_moore_2 = measure_time("boyer_moore_search", text_file_2, real_pattern_2)
 time_rabin_karp_2 = measure_time("rabin_karp_search", text_file_2, real_pattern_2)
 
+dict_real_2 = {
+    time_kmp_2: "Knuth-Morris-Pratt",
+    time_boyer_moore_2: "Boyer-Moore",
+    time_rabin_karp_2: "Rabin-Karp",
+}
+
 print()
 print(f"Час виконання алгоритмів для існуючого підрядка в {text_file_2}:")
-print("Knuth-Morris-Pratt:", time_kmp_2)
-print("Boyer-Moore:", time_boyer_moore_2)
-print("Rabin-Karp:", time_rabin_karp_2)
+for key, value in dict_real_2.items():
+    print(f"{value}: {key}")
 
 time_fake_kmp_2 = measure_time("knuth_morris_pratt_search", text_file_2, fake_pattern)
 time_fake_boyer_moore_2 = measure_time("boyer_moore_search", text_file_2, fake_pattern)
 time_fake_rabin_karp_2 = measure_time("rabin_karp_search", text_file_2, fake_pattern)
 
+dict_fake_2 = {
+    time_fake_kmp_2: "Knuth-Morris-Pratt",
+    time_fake_boyer_moore_2: "Boyer-Moore",
+    time_fake_rabin_karp_2: "Rabin-Karp",
+}
+
 print()
 print(f"Час виконання алгоритмів для вигаданого підрядка в {text_file_2}:")
-print("Knuth-Morris-Pratt:", time_fake_kmp_2)
-print("Boyer-Moore:", time_fake_boyer_moore_2)
-print("Rabin-Karp:", time_fake_rabin_karp_2)
+for key, value in dict_fake_2.items():
+    print(f"{value}: {key}")
 
 fastest_algorithm_real_2 = min(time_kmp_2, time_boyer_moore_2, time_rabin_karp_2)
 fastest_algorithm_fake_2 = min(
     time_fake_kmp_2, time_fake_boyer_moore_2, time_fake_rabin_karp_2
 )
 
+dict_best_time[fastest_algorithm_real_2] = (
+    dict_real_2[fastest_algorithm_real_2] + f" (real, {text_file_2})"
+)
+dict_best_time[fastest_algorithm_fake_2] = (
+    dict_fake_2[fastest_algorithm_fake_2] + f" (fake, {text_file_2})"
+)
+
 print()
 print(
-    f"Найшвидший алгоритм для існуючого підрядка в {text_file_2}:",
-    fastest_algorithm_real_2,
+    f"Найшвидший алгоритм для існуючого підрядка в {text_file_2}: {dict_real_2[fastest_algorithm_real_2]}: {fastest_algorithm_real_2}"
 )
 print(
-    f"Найшвидший алгоритм для для вигаданого підрядка в {text_file_2}:",
-    fastest_algorithm_fake_2,
+    f"Найшвидший алгоритм для для вигаданого підрядка в {text_file_2}: {dict_fake_2[fastest_algorithm_fake_2]}: {fastest_algorithm_fake_2}"
+)
+
+min_value_key = min(dict_best_time, key=lambda k: dict_best_time[k])
+min_value = dict_best_time[min_value_key]
+
+print()
+print(
+    f"Найшвидший алгоритм серед усіх замірів виявився алгоритм {min_value}: {min_value_key}"
 )
