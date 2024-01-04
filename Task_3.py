@@ -142,7 +142,7 @@ time_rabin_karp_1 = measure_time("rabin_karp_search", text_file_1, real_pattern_
 
 print()
 print(f"Час виконання алгоритмів для існуючого підрядка в {text_file_1}:")
-print("KMP:", time_kmp_1)
+print("Knuth-Morris-Pratt:", time_kmp_1)
 print("Boyer-Moore:", time_boyer_moore_1)
 print("Rabin-Karp:", time_rabin_karp_1)
 
@@ -152,7 +152,7 @@ time_fake_rabin_karp_1 = measure_time("rabin_karp_search", text_file_1, fake_pat
 
 print()
 print(f"Час виконання алгоритмів для вигаданого підрядка в {text_file_1}:")
-print("KMP:", time_fake_kmp_1)
+print("Knuth-Morris-Pratt:", time_fake_kmp_1)
 print("Boyer-Moore:", time_fake_boyer_moore_1)
 print("Rabin-Karp:", time_fake_rabin_karp_1)
 
@@ -177,7 +177,7 @@ time_rabin_karp_2 = measure_time("rabin_karp_search", text_file_2, real_pattern_
 
 print()
 print(f"Час виконання алгоритмів для існуючого підрядка в {text_file_2}:")
-print("KMP:", time_kmp_2)
+print("Knuth-Morris-Pratt:", time_kmp_2)
 print("Boyer-Moore:", time_boyer_moore_2)
 print("Rabin-Karp:", time_rabin_karp_2)
 
@@ -187,7 +187,7 @@ time_fake_rabin_karp_2 = measure_time("rabin_karp_search", text_file_2, fake_pat
 
 print()
 print(f"Час виконання алгоритмів для вигаданого підрядка в {text_file_2}:")
-print("KMP:", time_fake_kmp_2)
+print("Knuth-Morris-Pratt:", time_fake_kmp_2)
 print("Boyer-Moore:", time_fake_boyer_moore_2)
 print("Rabin-Karp:", time_fake_rabin_karp_2)
 
